@@ -24,6 +24,3 @@ var app = angular.module('Timetable',
         $locationProvider.html5Mode(true);
     });
 
-app.run(function($rootScope, $location){
-    
-})

@@ -1,8 +1,7 @@
-app.controller('SideNavCtrl', function ($scope, $timeout,$location, $mdSidenav, $log, settingService, groupService) {
+app.controller('SideNavCtrl', function ($scope, $timeout,$location, $mdSidenav, $log, settingService) {
     $scope.toggleLeft = buildDelayedToggler('left');
 
-    $scope.courses = groupService.getCourses();
-    $scope.groups = groupService.getGroups();
+    
     /**
      * Supplies a function that will continue to operate until the
      * time is up.
@@ -45,26 +44,22 @@ app.controller('SideNavCtrl', function ($scope, $timeout,$location, $mdSidenav, 
       };
     }
 
-    $scope.days = [
-        {link:'', name: "Сегодня"},
-        {link:'mon', name: "Понедельник"},
-        {link:'tue', name: "Вторник"},
-        {link:'wed', name: "Среда"},
-        {link:'thu', name: "Четверг"},
-        {link:'fri', name: "Пятница"},
-        {link:'sat', name: "Суббота"}
-    ]
+    $scope.days = settingService.getDays()
+    $scope.courses = settingService.getCourses();
+    $scope.groups = settingService.getGroups();
+
     $scope.redirect = function(link){
-        $scope.current = link.name;
+        $scope.currentDay = link.name;
+        settingService.setDay(link.name);
         $location.path(link.link);
     }
-
-    $scope.currentCourse = groupService.get().course;
-    $scope.currentGroup = groupService.get().group;
+    $scope.currentDay = settingService.get().day;
+    $scope.currentCourse = settingService.get().course;
+    $scope.currentGroup = settingService.get().group;
 
     $scope.save = function(course, group){
-      groupService.setCourse(course);
-      groupService.setGroup(group);
+      settingService.setCourse(course);
+      settingService.setGroup(group);
       $scope.currentCourse = course;
       $scope.currentGroup = group;
     }

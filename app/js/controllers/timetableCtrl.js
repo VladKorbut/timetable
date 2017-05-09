@@ -1,6 +1,6 @@
 'use strict';
 app.controller('timetableCtrl', function($scope, $routeParams,$location, timetableService){
-	if($location.path() === '/today'){
+	if($location.path() === '/'){
 		timetableService.getToday().then(
 			function(res){
 				$scope.pairs = res;

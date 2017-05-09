@@ -8,6 +8,11 @@ app.factory('timetableService', function(timeService, storageService, $http) {
 	function getPercentage(start){
 		return (getCurrentSeconds()-start) / (80*60) * 100;
 	}
+	function getCurrentWeekDay() {
+		var days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+		var date = new Date();
+		return days[date.getDay()];
+	}
 	return{
 		sanitize:function(pairs){
 			var sanitized = [];
@@ -41,6 +46,7 @@ app.factory('timetableService', function(timeService, storageService, $http) {
 		},
 		getToday: function(){
 			self = this;
+			console.log(getCurrentWeekDay());
 			return $http.get('api/today.json').then(function(data){
 				return self.sanitizeAll(data.data);
 			});
