@@ -46,7 +46,6 @@ app.factory('timetableService', function(timeService, storageService, $http) {
 			});
 		},
 		get:function(day){
-			console.log(day)
 			self = this;
 			return $http.get('api/'+day+'.json').then(function(data){
 				return self.sanitize(data.data);

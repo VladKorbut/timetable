@@ -1,0 +1,44 @@
+<md-toolbar class="md-hue-2">
+	      <div class="md-toolbar-tools">
+	        <md-button class="md-icon-button" aria-label="Settings" ng-click='toggleLeft()'>
+	          <i class="material-icons">menu</i>
+	        </md-button>
+
+	        <h2 layout='row' layout-align='center center' flex="" md-truncate="">{{currentCourse}} к. {{currentGroup}} г.</h2>
+
+	      </div>
+	</md-toolbar>
+	<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
+	      <md-toolbar layout='row'  class="md-theme-indigo">
+	        <h1 class="md-toolbar-tools">Настройки</h1>
+	      </md-toolbar>
+	      <md-content layout-padding="" ng-controller="LeftCtrl">
+	        <md-list-item ng-repeat='item in days' ng-click='redirect(item)'>{{item.name}}</md-sidemenu-button>
+			      </md-content>
+			</md-list-item>
+		  </md-content>
+		  <md-divider ng-if="!$last"></md-divider>
+		  <form name="projectForm">
+      <div layout="row" layout-align='center'>
+	<div layout-padding='1'>
+        <md-input-container' >
+          <label>Course Number</label>
+          <md-select name="type" ng-model="course" required>
+            <md-option ng-click='selectCousre(item)' ng-repeat='item in courses' value="{{item}}">{{item}}</md-option>
+          </md-select>
+		</md-input-container>
+		<md-input-container'>
+          <label>Group Number</label>
+          <md-select name="type" ng-model="group" required>
+            <md-option ng-click='selectGroup(item)' ng-repeat='item in groups' value="{{item}}">{{item}}</md-option>
+          </md-select>
+        </md-input-container>
+        </div>
+      </div>
+      <div layout="row">
+        <section flex="100" layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+            <md-button ng-disabled="!(group && course)" class="md-raised md-primary" ng-click='save(course, group)'>Save</md-button>
+        </section>
+      </div>
+
+    </form>

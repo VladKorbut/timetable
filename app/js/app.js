@@ -8,11 +8,11 @@ var app = angular.module('Timetable',
 .config(function($routeProvider, $locationProvider) {
 
         $routeProvider
-            .when('/', {
+            /*.when('/', {
                 templateUrl : 'view/start.html',
                 controller: 'startCtrl'
-            })
-            .when('/today', {
+            })*/
+            .when('/', {
                 templateUrl : 'view/timetable.html',
                 controller: 'timetableCtrl'
             })
@@ -25,18 +25,5 @@ var app = angular.module('Timetable',
     });
 
 app.run(function($rootScope, $location){
-    $rootScope.current = 'Сегодня';
-    $rootScope.days = [
-        {link:'today', name: "Сегодня"},
-        {link:'mon', name: "Понедельник"},
-        {link:'tue', name: "Вторник"},
-        {link:'wed', name: "Среда"},
-        {link:'thu', name: "Четверг"},
-        {link:'fri', name: "Пятница"},
-        {link:'sat', name: "Суббота"}
-    ]
-    $rootScope.redirect = function(link){
-        $rootScope.current = link.name;
-        $location.path(link.link)
-    }
+    
 })
