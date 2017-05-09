@@ -1,0 +1,19 @@
+<md-content ng-repeat='item in pairs track by $index' flex='100' layout="row" layout-align='center center'>
+    <div flex-xs="100" flex-gt-xs="50" layout="column">
+      <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch="">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{item.name}}</span>
+            <span class="md-subhead">{{item.teacher}}</span>
+          </md-card-title-text>
+          <md-card-title-media ng-if='item.current'>
+            <md-progress-circular md-mode="determinate" value="{{item.value}}"></md-progress-circular>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="space-between center">
+          <span class="md-subhead">{{item.classroom}}</span>
+          <span class="md-subhead">{{item.time}}</span>
+        </md-card-actions>
+      </md-card>
+    </div>
+</md-content>

@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<base href="/">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Timetable</title>
-
+	<link rel="stylesheet" href="node_modules/angular-material/angular-material.css">
+	<link rel="stylesheet" href="node_modules/angular-material-sidemenu/dest/angular-material-sidemenu.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body ng-app="Timetable">
+<md-sidemenu>
+  <md-sidemenu-group>
+    <md-sidemenu-content md-heading="{{current}}" md-arrow="true">
+      <md-sidemenu-button ng-repeat='item in days' ng-click='redirect(item)'>{{item.name}}</md-sidemenu-button>
+    </md-sidemenu-content>
+  </md-sidemenu-group>
+</md-sidemenu>
+<ng-view></ng-view>
 </body>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js'></script>
-<script src='app/js/app.js'></script>
+<script src="node_modules/angular/angular.min.js"></script>
+<script src="node_modules/angular-animate/angular-animate.min.js"></script>
+<script src="node_modules/angular-aria/angular-aria.min.js"></script>
+<script src="node_modules/angular-material/angular-material.min.js"></script>
+<script src='node_modules/angular-route/angular-route.min.js'></script>
+<script src='node_modules/angular-material-sidemenu/dest/angular-material-sidemenu.js'></script>
+
+
+<script src='js/app.js'></script>
+
+<script src='js/services/groupService.js'></script>
+<script src='js/services/storageService.js'></script>
+<script src='js/services/timeService.js'></script>
+<script src='js/services/timetableService.js'></script>
+
+<script src='js/controllers/startCtrl.js'></script>
+<script src='js/controllers/timetableCtrl.js'></script>
 </html>
+
