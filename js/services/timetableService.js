@@ -14,6 +14,26 @@ app.factory('timetableService', function(timeService, storageService, $http) {
 		return days[date.getDay()];
 	}
 	return{
+
+		sanitizeToday: function (pairs){
+			console.log(pairs)
+			var sanitized = [];
+			pairs.forEach(function(item){
+				if(timeService.getTimeStart(item.number) + (81*60) > getCurrentSeconds()){
+					sanitized.push({
+						name:item.name,
+						teacher:item.teacher,
+						classroom:item.classroom,
+						start: timeService.getTimeString(item.number).start,
+						end:timeService.getTimeString(item.number).end,
+						current: (timeService.getTimeStart(item.number) < getCurrentSeconds()
+								&& timeService.getTimeStart(item.number) + (80*60) > getCurrentSeconds()) ? true : false,
+						value: getPercentage(timeService.getTimeStart(item.number))
+					})
+				}
+			})
+			return sanitized;
+		},
 		sanitize:function(pairs){
 			var sanitized = [];
 			pairs.forEach(function(item){
@@ -21,26 +41,10 @@ app.factory('timetableService', function(timeService, storageService, $http) {
 					name:item.name,
 					teacher:item.teacher,
 					classroom:item.classroom,
-					time: timeService.getTimeString(item.number),
-					value: getPercentage(timeService.get(item.number))
+					start: timeService.getTimeString(item.number).start,
+					end:timeService.getTimeString(item.number).end,
+					value: getPercentage(timeService.getTimeStart(item.number))
 				})
-			})
-			return sanitized;
-		},
-		sanitizeAll: function (pairs){
-			var sanitized = [];
-			pairs.forEach(function(item){
-				if(timeService.get(item.number) + (80*60) > getCurrentSeconds()){
-					sanitized.push({
-						name:item.name,
-						teacher:item.teacher,
-						classroom:item.classroom,
-						time: timeService.getTimeString(item.number),
-						current: (timeService.get(item.number) < getCurrentSeconds()
-								&& timeService.get(item.number) + (80*60) > getCurrentSeconds()) ? true : false,
-						value: getPercentage(timeService.get(item.number))
-					})
-				}
 			})
 			return sanitized;
 		},
@@ -48,7 +52,7 @@ app.factory('timetableService', function(timeService, storageService, $http) {
 			self = this;
 			console.log(getCurrentWeekDay());
 			return $http.get('api/today.json').then(function(data){
-				return self.sanitizeAll(data.data);
+				return self.sanitizeToday(data.data);
 			});
 		},
 		get:function(day){

@@ -4,7 +4,7 @@
 	          <i class="material-icons">menu</i>
 	        </md-button>
 
-	        <h2 layout='row' layout-align='center center' flex="" md-truncate="">{{currentCourse}} к. {{currentGroup}} г. | {{currentDay}}</h2>
+	        <h2 layout='row' layout-align='center center' flex="" md-truncate="">{{currentCourse}} к. {{currentGroup}} г. </h2>
 
 	      </div>
 	</md-toolbar>
@@ -12,27 +12,25 @@
 	      <md-toolbar layout='row'  class="md-theme-indigo">
 	        <h1 class="md-toolbar-tools">Настройки</h1>
 	      </md-toolbar>
-	      <md-content layout-padding="" ng-controller="LeftCtrl">
-	        <md-list-item ng-repeat='item in days' ng-click='redirect(item)'>{{item.name}}</md-sidemenu-button>
-			      </md-content>
-			</md-list-item>
-		  </md-content>
-		  <md-divider ng-if="!$last"></md-divider>
-		  <form name="projectForm">
-      <div layout="row" layout-align='center'>
-	<div layout-padding='1'>
-        <md-input-container' >
-          <label>Course Number</label>
-          <md-select name="type" ng-model="course" required>
-            <md-option ng-click='selectCousre(item)' ng-repeat='item in courses' value="{{item}}">{{item}}</md-option>
-          </md-select>
-		</md-input-container>
-		<md-input-container'>
-          <label>Group Number</label>
-          <md-select name="type" ng-model="group" required>
-            <md-option ng-click='selectGroup(item)' ng-repeat='item in groups' value="{{item}}">{{item}}</md-option>
-          </md-select>
-        </md-input-container>
+	      <!--<md-content layout-padding="" ng-controller="LeftCtrl">
+	        <md-list-item ng-repeat='item in days' ng-click='redirect(item)'>{{item.name}}</md-list-item>
+
+		 </md-content>-->
+	<form name="projectForm">
+      <div layout="column" layout-align='center center'>
+		<div layout-padding='1'> 
+	        <md-input-container flex='100'>
+	          <label>Course Number</label>
+	          <md-select name="type" ng-model="course" required>
+	            <md-option ng-click='selectCousre(item)' ng-repeat='item in courses' value="{{item}}">{{item}}</md-option>
+	          </md-select>
+			</md-input-container>
+			<md-input-container flex='100'>
+	          <label>Group Number</label>
+	          <md-select name="type" ng-model="group" required>
+	            <md-option ng-click='selectGroup(item)' ng-repeat='item in groups' value="{{item}}">{{item}}</md-option>
+	          </md-select>
+	        </md-input-container>
         </div>
       </div>
       <div layout="row">
@@ -40,5 +38,17 @@
             <md-button ng-disabled="!(group && course)" class="md-raised md-primary" ng-click='save(course, group)'>Save</md-button>
         </section>
       </div>
-
     </form>
+    </md-sidenav>
+
+
+
+    <md-content>
+    <md-tabs md-dynamic-height md-swipe-content md-selected='res' md-center-tabs >
+      <md-tab ng-repeat='item in days' ng-click='redirect(item)' label="{{item.name}}">
+        <md-content md-swipe-left="next()" md-swipe-right="previous()" class="md-padding">
+          <ng-view></ng-view>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>

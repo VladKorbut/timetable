@@ -14,13 +14,12 @@ app.factory('settingService', function(storageService, $location, $routeParams) 
 		return $routeParams.day;
 	}
 	const days = [
-        {link:'/', name: "Сегодня"},
-        {link:'mon', name: "Понедельник"},
-        {link:'tue', name: "Вторник"},
-        {link:'wed', name: "Среда"},
-        {link:'thu', name: "Четверг"},
-        {link:'fri', name: "Пятница"},
-        {link:'sat', name: "Суббота"}
+        {link:'mon', name: "ПН"},
+        {link:'tue', name: "ВТ"},
+        {link:'wed', name: "СР"},
+        {link:'thu', name: "ЧТ"},
+        {link:'fri', name: "ПТ"},
+        {link:'sat', name: "СБ"}
     ];
 	const courses = [2];
 	const groups  = [2,9];
@@ -38,7 +37,7 @@ app.factory('settingService', function(storageService, $location, $routeParams) 
 			return{
 				course: course,
 				group: group,
-				day:day
+				day: day
 			}
 		},
 		getCourses: function(){

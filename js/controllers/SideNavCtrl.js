@@ -1,4 +1,4 @@
-app.controller('SideNavCtrl', function ($scope, $timeout,$location, $mdSidenav, $log, settingService) {
+app.controller('SideNavCtrl', function ($scope, $timeout,$location,$mdSidenav, $log, settingService) {
     $scope.toggleLeft = buildDelayedToggler('left');
 
     
@@ -49,11 +49,9 @@ app.controller('SideNavCtrl', function ($scope, $timeout,$location, $mdSidenav, 
     $scope.groups = settingService.getGroups();
 
     $scope.redirect = function(link){
-        $scope.currentDay = link.name;
         settingService.setDay(link.name);
         $location.path(link.link);
     }
-    $scope.currentDay = settingService.get().day;
     $scope.currentCourse = settingService.get().course;
     $scope.currentGroup = settingService.get().group;
 
@@ -63,6 +61,46 @@ app.controller('SideNavCtrl', function ($scope, $timeout,$location, $mdSidenav, 
       $scope.currentCourse = course;
       $scope.currentGroup = group;
     }
+
+    function checkPath(){
+      $scope.res ;
+      settingService.getDays().forEach(function(item, i){
+        if($location.path().slice(1) == item.link){
+          $scope.res = i;
+        }
+      });
+    }
+    checkPath();
+
+    function getNumberOfDay(){
+      var res;
+      var days = settingService.getDays();
+      days.forEach(function(item, i){
+        if($location.path().slice(1) == item.link){
+          res = i;
+        }
+      });
+      return res;
+    }
+
+    $scope.next = function(){
+      var num = getNumberOfDay();
+      var days = settingService.getDays();
+      if(num < days.length-1){
+        $location.path(days[num+1].link);
+      }
+    }
+
+    $scope.previous = function(){
+      var num = getNumberOfDay();
+      var days = settingService.getDays();
+      if(num > 0){
+        $location.path(days[num-1].link);
+      }
+    }
+
+
+
   })
   .controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
     $scope.close = function () {
