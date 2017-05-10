@@ -1,4 +1,6 @@
-<span layout='row' layout-align='center center' ng-if='!pairs.length' style="height: 250px;">Нет записей!</span>
+<div layout='column' layout-align='center center' ng-if='!pairs.length' style="height: 500px">
+  <md-content >Нет записей!</md-content>
+</div>
 <md-content ng-repeat='item in pairs track by $index' flex='100' layout="row" layout-align='center center'>
     <div flex-xs="100" flex-gt-xs="50" flex-sm='75' layout="column">
       <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch="">

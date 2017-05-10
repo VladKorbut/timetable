@@ -4,7 +4,7 @@
 	          <i class="material-icons">menu</i>
 	        </md-button>
 
-	        <h2 layout='row' layout-align='center center' flex="" md-truncate="">{{currentCourse}} к. {{currentGroup}} г. </h2>
+	        <h2 layout='row' layout-align='center center' flex="" md-truncate="">{{currentCourse}} курс {{currentGroup}} гр. </h2>
 
 	      </div>
 	</md-toolbar>
@@ -44,8 +44,8 @@
 
 
     <md-content>
-    <md-tabs md-dynamic-height md-swipe-content md-selected='res' md-center-tabs >
-      <md-tab ng-repeat='item in days' ng-click='redirect(item)' label="{{item.name}}">
+    <md-tabs md-dynamic-height md-swipe-content  md-center-tabs md-stretch-tabs='auto' md-no-pagination>
+      <md-tab ng-repeat='item in days' ng-click='redirect(item)' label="{{item.name}}" md-active='getActiveTab(item.link)'>
         <md-content md-swipe-left="next()" md-swipe-right="previous()" class="md-padding">
           <ng-view></ng-view>
         </md-content>

@@ -62,15 +62,6 @@ app.controller('SideNavCtrl', function ($scope, $timeout,$location,$mdSidenav, $
       $scope.currentGroup = group;
     }
 
-    function checkPath(){
-      $scope.res ;
-      settingService.getDays().forEach(function(item, i){
-        if($location.path().slice(1) == item.link){
-          $scope.res = i;
-        }
-      });
-    }
-    checkPath();
 
     function getNumberOfDay(){
       var res;
@@ -99,6 +90,12 @@ app.controller('SideNavCtrl', function ($scope, $timeout,$location,$mdSidenav, $
       }
     }
 
+    $scope.getActiveTab = function(item){
+      if(item == $location.path().slice(1)){
+        return true;
+      }
+      return false;
+    }
 
 
   })

@@ -23,4 +23,19 @@ var app = angular.module('Timetable',
 
         $locationProvider.html5Mode(true);
     });
-
+app.run(function($location, $rootScope, settingService){
+    function getWeekday(){
+        var d = new Date();
+        return d.getDay();
+    }
+    $rootScope.$on('$routeChangeStart', function(next, current) { 
+        if($location.path() == '/'){
+            if(getWeekday() > 0){
+                $location.path(settingService.getDays()[getWeekday()].link);
+            }
+            else{
+                $location.path(settingService.getDays()[0].link);
+            }
+        }
+    });
+})
