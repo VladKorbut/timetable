@@ -31,7 +31,7 @@ app.run(function($location, $rootScope, settingService){
     $rootScope.$on('$routeChangeStart', function(next, current) { 
         if($location.path() == '/'){
             if(getWeekday() > 0){
-                $location.path(settingService.getDays()[getWeekday()].link);
+                $location.path(settingService.getDays()[getWeekday()-1].link);
             }
             else{
                 $location.path(settingService.getDays()[0].link);
