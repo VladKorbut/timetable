@@ -8,10 +8,6 @@ var app = angular.module('Timetable',
 .config(function($routeProvider, $locationProvider) {
 
         $routeProvider
-            /*.when('/', {
-                templateUrl : 'view/start.html',
-                controller: 'startCtrl'
-            })*/
             .when('/', {
                 templateUrl : 'view/timetable.html',
                 controller: 'timetableCtrl'

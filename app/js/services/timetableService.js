@@ -1,5 +1,5 @@
 'use strict';
-app.factory('timetableService', function(timeService, storageService, $http) {
+app.factory('timetableService', function(timeService, $http, $location, storageService) {
 	function getCurrentSeconds() {
 		var date = new Date();
 
@@ -16,21 +16,20 @@ app.factory('timetableService', function(timeService, storageService, $http) {
 	return{
 
 		sanitizeToday: function (pairs){
-			console.log(pairs)
 			var sanitized = [];
+			
 			pairs.forEach(function(item){
-				if(timeService.getTimeStart(item.number) + (81*60) > getCurrentSeconds()){
-					sanitized.push({
-						name:item.name,
-						teacher:item.teacher,
-						classroom:item.classroom,
-						start: timeService.getTimeString(item.number).start,
-						end:timeService.getTimeString(item.number).end,
-						current: (timeService.getTimeStart(item.number) < getCurrentSeconds()
-								&& timeService.getTimeStart(item.number) + (80*60) > getCurrentSeconds()) ? true : false,
-						value: getPercentage(timeService.getTimeStart(item.number))
-					})
-				}
+				sanitized.push({
+					name:item.name,
+					teacher:item.teacher,
+					classroom:item.classroom,
+					start: timeService.getTimeString(item.number).start,
+					end:timeService.getTimeString(item.number).end,
+					current: (timeService.getTimeStart(item.number) < getCurrentSeconds()
+							&& timeService.getTimeStart(item.number) + (80*60) > getCurrentSeconds()) ? true : false,
+					value: getPercentage(timeService.getTimeStart(item.number)),
+					ended: timeService.getTimeStart(item.number) + (81*60) > getCurrentSeconds() ? false : true
+				})
 			})
 			return sanitized;
 		},
@@ -43,23 +42,24 @@ app.factory('timetableService', function(timeService, storageService, $http) {
 					classroom:item.classroom,
 					start: timeService.getTimeString(item.number).start,
 					end:timeService.getTimeString(item.number).end,
-					value: getPercentage(timeService.getTimeStart(item.number))
+					value: getPercentage(timeService.getTimeStart(item.number)),
+					ended: false
 				})
 			})
 			return sanitized;
 		},
-		getToday: function(){
+		get: function(day){
 			self = this;
-			console.log(getCurrentWeekDay());
-			return $http.get('api/today.json').then(function(data){
-				return self.sanitizeToday(data.data);
-			});
-		},
-		get:function(day){
-			self = this;
-			return $http.get('api/'+day+'.json').then(function(data){
-				return self.sanitize(data.data);
-			});
+			if($location.path().slice(1) == getCurrentWeekDay()){
+				return $http.get('api/today.json').then(function(data){
+					return self.sanitizeToday(data.data);
+				});
+			}else{
+				return $http.get('api/'+day+'.json').then(function(data){
+					return self.sanitize(data.data);
+				});
+			}
+			
 		}
 	}
 });
