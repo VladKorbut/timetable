@@ -8,11 +8,6 @@ app.factory('timetableService', function(timeService, $http, $location, storageS
 	function getPercentage(start){
 		return (getCurrentSeconds()-start) / (80*60) * 100;
 	}
-	function getCurrentWeekDay() {
-		var days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-		var date = new Date();
-		return days[date.getDay()];
-	}
 	return{
 
 		sanitizeToday: function (pairs){
@@ -50,7 +45,7 @@ app.factory('timetableService', function(timeService, $http, $location, storageS
 		},
 		get: function(day){
 			self = this;
-			if($location.path().slice(1) == getCurrentWeekDay()){
+			if($location.path().slice(1) == this.getCurrentWeekDay()){
 				return $http.get('api/today.json').then(function(data){
 					return self.sanitizeToday(data.data);
 				});
@@ -60,6 +55,11 @@ app.factory('timetableService', function(timeService, $http, $location, storageS
 				});
 			}
 			
+		},
+		getCurrentWeekDay() {
+			var days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+			var date = new Date();
+			return days[date.getDay()];
 		}
 	}
 });

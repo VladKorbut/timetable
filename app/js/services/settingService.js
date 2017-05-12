@@ -1,5 +1,5 @@
 'use strict';
-app.factory('settingService', function(storageService, $location, $routeParams) {
+app.factory('settingService', function($location, $routeParams, storageService ) {
 	function getNameOfDay(){
 		var result;
 		days.forEach(function(item){
@@ -14,12 +14,12 @@ app.factory('settingService', function(storageService, $location, $routeParams) 
 		return $routeParams.day;
 	}
 	const days = [
-        {link:'mon', name: "ПН"},
-        {link:'tue', name: "ВТ"},
-        {link:'wed', name: "СР"},
-        {link:'thu', name: "ЧТ"},
-        {link:'fri', name: "ПТ"},
-        {link:'sat', name: "СБ"}
+        {link:'mon', name: "П"},
+        {link:'tue', name: "В"},
+        {link:'wed', name: "С"},
+        {link:'thu', name: "Ч"},
+        {link:'fri', name: "П"},
+        {link:'sat', name: "С"}
     ];
 	const courses = [2];
 	const groups  = [2,9];
@@ -59,6 +59,9 @@ app.factory('settingService', function(storageService, $location, $routeParams) 
 		},
 		setDay: function(currDay){
 			day = currDay;
+		},
+		getToday: function(){
+			return 
 		}
 	};
  });

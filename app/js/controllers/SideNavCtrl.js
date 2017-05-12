@@ -1,7 +1,7 @@
-app.controller('SideNavCtrl', function ($scope, $timeout,$location,$mdSidenav, $log, settingService) {
+app.controller('SideNavCtrl', function ($scope, $timeout,$location,$mdSidenav, $log, settingService, timetableService) {
     $scope.toggleLeft = buildDelayedToggler('left');
 
-    
+    $scope.currentPath = timetableService.getCurrentWeekDay();
     /**
      * Supplies a function that will continue to operate until the
      * time is up.
