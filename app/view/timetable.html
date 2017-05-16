@@ -4,18 +4,15 @@
 <div layout='column' layout-align='center center' ng-if='!loaded' style="height: 500px">
   <md-progress-circular md-mode="indeterminate"></md-progress-circular>
 </div>
-<md-content ng-repeat='item in pairs track by $index' flex='100' layout="row" layout-align='center center'>
+<md-content ng-repeat='item in pairs | orderBy: number' flex='100' layout="row" layout-align='center center'>
     <div flex-xs="100" flex-gt-xs="50" flex-sm='75' layout="column">
       <md-card ng-class='item.ended ? "active" : ""' md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch="">
         <md-card-title>
           <md-card-title-text>
-            <span class="md-headline">{{item.name}}</span>
-            <span class="md-subhead">{{item.teacher}} </span>
+            <div class="md-headline">{{item.name}}</div>
+            <div class="md-subhead">{{item.teacher}} </div>
           </md-card-title-text>
           <span ng-if='item.classroom'><!--<i class="material-icons">place</i>-->{{item.classroom}}</span>
-          <md-card-title-media>
-            
-          </md-card-title-media>
         </md-card-title>
         <md-card-actions layout="row" layout-align="space-between center">
           <span class="md-subhead">{{item.start}}</span>

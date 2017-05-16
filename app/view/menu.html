@@ -4,7 +4,7 @@
 	          <i class="material-icons">menu</i>
 	        </md-button>
 
-	        <h2 layout='row' layout-align='center center' flex="" md-truncate="">{{currentCourse}} курс {{currentGroup}} гр. </h2>
+	        <h2 layout='row' layout-align='center center' flex="" md-truncate="">{{currentCourse.num}} курс {{currentGroup.num}} гр. </h2>
 
 	      </div>
 	</md-toolbar>
@@ -17,18 +17,19 @@
 
 		 </md-content>-->
 	<form name="projectForm">
-      <div layout="column" layout-align='center center'>
-		<div layout-padding='1'> 
-	        <md-input-container flex='100'>
-	          <label>Course Number</label>
+      <div layout='column' md-no-resize layout-align='center center' md-no-resize>
+		<div layout-padding=''> 
+	        <md-input-container>
+	          <label>Курс</label>
 	          <md-select name="type" ng-model="course" required>
-	            <md-option ng-click='selectCousre(item)' ng-repeat='item in courses' value="{{item}}">{{item}}</md-option>
+	            <md-option ng-click='selectCousre(item)' ng-repeat='item in courses' value="{{item}}">{{item.num}}</md-option>
 	          </md-select>
 			</md-input-container>
-			<md-input-container flex='100'>
-	          <label>Group Number</label>
+			<br>
+			<md-input-container>
+	          <label>Группа</label>
 	          <md-select name="type" ng-model="group" required>
-	            <md-option ng-click='selectGroup(item)' ng-repeat='item in groups' value="{{item}}">{{item}}</md-option>
+	            <md-option ng-click='selectGroup(item)' ng-repeat='item in groups' value="{{item}}">{{item.num}}</md-option>
 	          </md-select>
 	        </md-input-container>
         </div>
@@ -45,8 +46,8 @@
 
     <md-content>
     <md-tabs md-dynamic-height md-center-tabs md-no-pagination md-enable-disconnect>
-      <md-tab ng-repeat='item in days' md-on-select='redirect(item)' label="{{item.name + (currentPath == item.link ? '•' : '' )}}" md-active='getActiveTab(item.link)'>
-        <md-content  class="md-padding">
+      <md-tab ng-repeat='item in days' md-on-select='redirect(item)' label="{{item.name + (currentPath == item.link ? '●' : '' )}}" md-active='getActiveTab(item.link)'>
+        <md-content class="md-padding">
           <ng-view></ng-view>
         </md-content>
       </md-tab>

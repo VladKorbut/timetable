@@ -23,8 +23,8 @@
     "angular-route": "^1.6.4",
     "angular-touch": "^1.6.4",
     "gulp": "^3.9.1",
-    "gulp-webserver": "^0.9.1"
+    "gulp-webserver": "^0.9.1",
+    "material-icons": "^0.1.0"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

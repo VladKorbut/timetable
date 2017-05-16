@@ -1,5 +1,13 @@
 'use strict';
-app.factory('settingService', function($location, $routeParams, storageService ) {
+app.factory('settingService', function($location, $routeParams, $http, storageService, serverService) {
+	const days = [
+        {link:'mon', name: "П"},
+        {link:'tue', name: "В"},
+        {link:'wed', name: "С"},
+        {link:'thu', name: "Ч"},
+        {link:'fri', name: "П"},
+        {link:'sat', name: "С"}
+    ];
 	function getNameOfDay(){
 		var result;
 		days.forEach(function(item){
@@ -13,17 +21,26 @@ app.factory('settingService', function($location, $routeParams, storageService )
 	function getParams(){
 		return $routeParams.day;
 	}
-	const days = [
-        {link:'mon', name: "П"},
-        {link:'tue', name: "В"},
-        {link:'wed', name: "С"},
-        {link:'thu', name: "Ч"},
-        {link:'fri', name: "П"},
-        {link:'sat', name: "С"}
-    ];
-	const courses = [2];
-	const groups  = [2,9];
+	
+    function parseCourses(data){
+    	data.forEach(function(item, i){
+    		var course = {
+    			number: item.courseIndex,
+    			groups: item.groupNumbers.split(',')
+    		}
+    		courses.push(course);
 
+    	})
+    }
+    function getAllGroupsAndCourses(){
+    	$http.get(serverService.get()+'/get-courses').then(function(data){
+			coursesAndGroups = data.data;
+			parseCourses(coursesAndGroups);
+		});
+    };
+    var coursesAndGroups = [];
+	const courses = [{num:2, index:1}];
+	const groups = [{num:2, index:1}, {num:9, index:2}];
 
 	var day = $location.path() != '/' ? getNameOfDay() : days[0].name;
 	var group  = storageService.get('group') ? storageService.get('group') : groups[0];

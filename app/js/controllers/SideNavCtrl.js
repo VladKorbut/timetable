@@ -1,11 +1,8 @@
-app.controller('SideNavCtrl', function ($scope, $timeout,$location,$mdSidenav, $log, settingService, timetableService) {
+app.controller('SideNavCtrl', function ($scope, $timeout, $location, $mdSidenav, $log,$route, settingService, timetableService) {
     $scope.toggleLeft = buildDelayedToggler('left');
 
     $scope.currentPath = timetableService.getCurrentWeekDay();
-    /**
-     * Supplies a function that will continue to operate until the
-     * time is up.
-     */
+
     function debounce(func, wait, context) {
       var timer;
 
@@ -20,13 +17,8 @@ app.controller('SideNavCtrl', function ($scope, $timeout,$location,$mdSidenav, $
       };
     }
 
-    /**
-     * Build handler to open/close a SideNav; when animation finishes
-     * report completion in console
-     */
     function buildDelayedToggler(navID) {
       return debounce(function() {
-        // Component lookup should always be available since we are not using `ng-if`
         $mdSidenav(navID)
           .toggle()
           .then(function () {
@@ -36,7 +28,6 @@ app.controller('SideNavCtrl', function ($scope, $timeout,$location,$mdSidenav, $
 
     function buildToggler(navID) {
       return function() {
-        // Component lookup should always be available since we are not using `ng-if`
         $mdSidenav(navID)
           .toggle()
           .then(function () {
@@ -52,16 +43,16 @@ app.controller('SideNavCtrl', function ($scope, $timeout,$location,$mdSidenav, $
         settingService.setDay(link.name);
         $location.path(link.link);
     }
-    $scope.currentCourse = settingService.get().course;
-    $scope.currentGroup = settingService.get().group;
+    $scope.currentCourse = JSON.parse(settingService.get().course);
+    $scope.currentGroup = JSON.parse(settingService.get().group);
 
     $scope.save = function(course, group){
       settingService.setCourse(course);
       settingService.setGroup(group);
-      $scope.currentCourse = course;
-      $scope.currentGroup = group;
+      $scope.currentCourse = JSON.parse(course);
+      $scope.currentGroup = JSON.parse(group);
+      $route.reload()
     }
-
 
     function getNumberOfDay(){
       var res;
@@ -72,22 +63,6 @@ app.controller('SideNavCtrl', function ($scope, $timeout,$location,$mdSidenav, $
         }
       });
       return res;
-    }
-
-    $scope.next = function(){
-      var num = getNumberOfDay();
-      var days = settingService.getDays();
-      if(num < days.length-1){
-        $location.path(days[num+1].link);
-      }
-    }
-
-    $scope.previous = function(){
-      var num = getNumberOfDay();
-      var days = settingService.getDays();
-      if(num > 0){
-        $location.path(days[num-1].link);
-      }
     }
 
     $scope.getActiveTab = function(item){
@@ -101,7 +76,6 @@ app.controller('SideNavCtrl', function ($scope, $timeout,$location,$mdSidenav, $
   })
   .controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
     $scope.close = function () {
-      // Component lookup should always be available since we are not using `ng-if`
       $mdSidenav('left').close()
         .then(function () {
         });
