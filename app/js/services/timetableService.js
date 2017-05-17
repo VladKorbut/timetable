@@ -45,10 +45,7 @@ app.factory('timetableService', function(timeService, $http, $location, storageS
 					sanitized.push({
 						name:item.name,
 						teacher:item.teacher,
-						classroom:item.classroom,
-						current: (timeService.getTimeStart(item.number) < getCurrentSeconds()
-								&& timeService.getTimeStart(item.number) + (81*60) > getCurrentSeconds()) ? true : false,
-						ended: timeService.getTimeStart(item.number) + (81*60) > getCurrentSeconds() ? false : true
+						classroom:item.classroom
 					})
 				}
 			})
@@ -92,6 +89,10 @@ app.factory('timetableService', function(timeService, $http, $location, storageS
 					self.sanitize(data.data)
 					return self.sanitize(data.data);
 				}
+			},
+			function(data){
+				console.log(data)
+				return [{name: 'Произошла ошибка при загрузке данных'}]
 			});
 			
 		},
